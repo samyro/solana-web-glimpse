@@ -1,104 +1,27 @@
+
 import { TokenRow } from "./TokenRow";
 import { Button } from "@/components/ui/button";
-import { Search, MoreHorizontal } from "lucide-react";
+import { Search, MoreHorizontal, ArrowUpDown, RefreshCw } from "lucide-react";
 import { Input } from "@/components/ui/input";
-
-const mockTokens = [
-  {
-    logo: "https://via.placeholder.com/32",
-    name: "topless coin",
-    symbol: "topless",
-    age: "1s",
-    contract: "FSZc...pump",
-    platform: "pump",
-    social: {},
-    metrics: {
-      priceChange1h: 7.3,
-      priceChange24h: 3,
-      txCount: 3,
-      volume: "302.8",
-      marketCap: "5.5K",
-      price: 0.0049,
-    }
-  },
-  {
-    logo: "https://via.placeholder.com/32",
-    name: "Claude Terminal",
-    symbol: "Claude",
-    age: "5s",
-    contract: "At5Q...bonk",
-    platform: "bonk",
-    social: {
-      twitter: "https://x.com/mckaywrigley/status/1934810851682472303"
-    },
-    metrics: {
-      priceChange1h: 2.4,
-      priceChange24h: 7,
-      txCount: 1,
-      volume: "360.1",
-      marketCap: "5.4K",
-      price: 0.000080,
-    }
-  },
-  {
-    logo: "https://via.placeholder.com/32",
-    name: "microInu",
-    symbol: "microInu",
-    age: "16s",
-    contract: "3sry...pump",
-    platform: "pump",
-    social: {},
-    metrics: {
-      priceChange1h: 16,
-      priceChange24h: 13,
-      txCount: 22,
-      volume: "1.2K",
-      marketCap: "6.5K",
-      price: 0.0092,
-    }
-  },
-  {
-    logo: "https://via.placeholder.com/32",
-    name: "i love you to bro <3",
-    symbol: "i luh u",
-    age: "19s",
-    contract: "4iyN...bonk",
-    platform: "bonk",
-    social: {},
-    metrics: {
-      priceChange1h: 0,
-      priceChange24h: 7,
-      txCount: 4,
-      volume: "710.6",
-      marketCap: "5K",
-      price: 0.0091,
-    }
-  },
-  {
-    logo: "https://via.placeholder.com/32",
-    name: "Mask Dog Coin",
-    symbol: "MASKDOG",
-    age: "23s",
-    contract: "2kFF...moon",
-    platform: "moon",
-    social: {
-      website: "https://moonshot.com"
-    },
-    metrics: {
-      priceChange1h: -2,
-      priceChange24h: 15,
-      txCount: 8,
-      volume: "892.3",
-      marketCap: "7.1K",
-      price: 0.0156,
-    }
-  }
-];
-
-// Duplicate tokens to fill the list
-const allTokens = [...mockTokens, ...mockTokens, ...mockTokens];
+import { useTokens } from "@/contexts/TokenContext";
 
 export const TokenGrid = () => {
+  const { filteredTokens, filters, updateFilters, isLoading } = useTokens();
+
+  const toggleSort = (sortBy: 'newest' | 'price' | 'volume' | 'marketCap') => {
+    const newDirection = filters.sortBy === sortBy && filters.sortDirection === 'desc' ? 'asc' : 'desc';
+    updateFilters({ sortBy, sortDirection: newDirection });
+  };
+
+  const getSortIcon = (column: string) => {
+    if (filters.sortBy === column) {
+      return (
+        <ArrowUpDown className={`h-3 w-3 ml-1 ${filters.sortDirection === 'desc' ? 'rotate-180' : ''}`} />
+      );
+    }
+    return <ArrowUpDown className="h-3 w-3 ml-1 opacity-50" />;
+  };
+
   return (
     <main className="flex-1 bg-background">
       {/* Header Controls */}
@@ -106,7 +29,9 @@ export const TokenGrid = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" className="h-7 text-xs">🌱 New</Button>
+              <Button variant="ghost" size="sm" className="h-7 text-xs">
+                🌱 New ({filteredTokens.length})
+              </Button>
               <Button variant="outline" size="sm" className="h-7 text-xs">P1</Button>
               <Button variant="outline" size="sm" className="h-7 text-xs">P2</Button>
               <Button variant="outline" size="sm" className="h-7 text-xs">P3</Button>
@@ -116,11 +41,14 @@ export const TokenGrid = () => {
               <Input 
                 placeholder="Search" 
                 className="pl-7 h-7 w-40 text-xs"
+                value={filters.searchTerm}
+                onChange={(e) => updateFilters({ searchTerm: e.target.value })}
               />
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">9</span>
+            {isLoading && <RefreshCw className="h-3 w-3 animate-spin text-muted-foreground" />}
+            <span className="text-xs text-muted-foreground">{filteredTokens.length}</span>
             <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
               <MoreHorizontal className="h-3 w-3" />
             </Button>
@@ -134,21 +62,59 @@ export const TokenGrid = () => {
           <div className="w-8">#</div>
           <div className="flex-1">Token</div>
           <div className="w-16">Social</div>
-          <div className="w-12 text-center">1h</div>
-          <div className="w-12 text-center">24h</div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-12 h-6 p-0 text-center hover:bg-muted/50"
+            onClick={() => toggleSort('newest')}
+          >
+            1h {getSortIcon('newest')}
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-12 h-6 p-0 text-center hover:bg-muted/50"
+            onClick={() => toggleSort('newest')}
+          >
+            24h {getSortIcon('newest')}
+          </Button>
           <div className="w-16 text-center">Metrics</div>
-          <div className="w-20 text-right">Price</div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-20 h-6 p-0 text-right hover:bg-muted/50"
+            onClick={() => toggleSort('price')}
+          >
+            Price {getSortIcon('price')}
+          </Button>
           <div className="w-12 text-center">TX</div>
-          <div className="w-20 text-right">V/MC</div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-20 h-6 p-0 text-right hover:bg-muted/50"
+            onClick={() => toggleSort('volume')}
+          >
+            V/MC {getSortIcon('volume')}
+          </Button>
           <div className="w-16">Action</div>
         </div>
       </div>
 
       {/* Token List */}
-      <div className="overflow-y-auto">
-        {allTokens.map((token, index) => (
-          <TokenRow key={index} {...token} />
-        ))}
+      <div className="overflow-y-auto max-h-[calc(100vh-200px)]">
+        {isLoading && filteredTokens.length === 0 ? (
+          <div className="flex justify-center items-center h-32">
+            <RefreshCw className="h-6 w-6 animate-spin text-muted-foreground" />
+          </div>
+        ) : filteredTokens.length === 0 ? (
+          <div className="flex justify-center items-center h-32 text-muted-foreground">
+            No tokens found matching your filters
+          </div>
+        ) : (
+          filteredTokens.map((token, index) => (
+            <TokenRow key={token.id} {...token} index={index + 1} />
+          ))
+        )}
       </div>
     </main>
   );
