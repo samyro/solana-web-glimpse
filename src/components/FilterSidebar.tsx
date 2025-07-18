@@ -53,7 +53,7 @@ export const FilterSidebar = () => {
           <Button 
             variant="ghost" 
             size="sm" 
-            className="h-6 w-6 p-0"
+            className="h-6 w-6 p-0 cursor-pointer touch-manipulation"
             onClick={resetFilters}
           >
             <X className="h-3 w-3" />
@@ -64,7 +64,7 @@ export const FilterSidebar = () => {
         <Button
           variant="outline"
           size="sm"
-          className="w-full h-7 text-xs"
+          className="w-full h-7 text-xs cursor-pointer touch-manipulation"
           onClick={refreshTokens}
           disabled={isLoading}
         >
@@ -80,7 +80,7 @@ export const FilterSidebar = () => {
                 key={platform}
                 variant={isPlatformSelected(platform) ? "default" : "outline"}
                 size="sm"
-                className="h-7 text-xs"
+                className="h-7 text-xs cursor-pointer touch-manipulation"
                 onClick={() => togglePlatform(platform)}
               >
                 {platform}
@@ -97,7 +97,7 @@ export const FilterSidebar = () => {
                 key={dex}
                 variant={isDexSelected(dex) ? "default" : "outline"}
                 size="sm"
-                className="h-7 text-xs"
+                className="h-7 text-xs cursor-pointer touch-manipulation"
                 onClick={() => toggleDex(dex)}
               >
                 {dex}
@@ -118,7 +118,7 @@ export const FilterSidebar = () => {
             />
             <Button 
               size="sm" 
-              className="h-7 px-2 text-xs"
+              className="h-7 px-2 text-xs cursor-pointer touch-manipulation"
               onClick={() => {
                 if (blacklistAddress.trim()) {
                   // Add to blacklist logic here
@@ -150,7 +150,7 @@ export const FilterSidebar = () => {
           <Button 
             variant={filters.hideWashTraded ? "default" : "outline"}
             size="sm" 
-            className="w-full h-7 text-xs justify-start"
+            className="w-full h-7 text-xs justify-start cursor-pointer touch-manipulation"
             onClick={() => updateFilters({ hideWashTraded: !filters.hideWashTraded })}
           >
             Filter Wash Traded
@@ -158,7 +158,7 @@ export const FilterSidebar = () => {
           <Button 
             variant={filters.hideTokens ? "default" : "outline"}
             size="sm" 
-            className="w-full h-7 text-xs justify-start"
+            className="w-full h-7 text-xs justify-start cursor-pointer touch-manipulation"
             onClick={() => updateFilters({ hideTokens: !filters.hideTokens })}
           >
             Hide Token
@@ -169,12 +169,12 @@ export const FilterSidebar = () => {
         <div className="space-y-2">
           <Button 
             variant="outline" 
-            className="w-full h-7 text-xs"
+            className="w-full h-7 text-xs cursor-pointer touch-manipulation"
             onClick={resetFilters}
           >
             Reset
           </Button>
-          <Button className="w-full bg-green hover:bg-green/90 text-green-foreground h-7 text-xs">
+          <Button className="w-full bg-green hover:bg-green/90 text-green-foreground h-7 text-xs cursor-pointer touch-manipulation">
             Apply
           </Button>
         </div>

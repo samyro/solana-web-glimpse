@@ -110,8 +110,11 @@ export const TokenRow = ({ id, logo, name, symbol, age, contract, social, metric
             <Button
               variant="ghost"
               size="sm"
-              className="h-4 w-4 p-0 opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity"
-              onClick={copyContract}
+              className="h-4 w-4 p-0 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                copyContract();
+              }}
             >
               <Copy className="h-2 w-2" />
             </Button>
@@ -125,8 +128,11 @@ export const TokenRow = ({ id, logo, name, symbol, age, contract, social, metric
           <Button 
             variant="ghost" 
             size="sm" 
-            className="h-5 w-5 p-0 hover:text-blue-400 transition-colors"
-            onClick={() => openSocial(social.twitter!)}
+            className="h-5 w-5 p-0 hover:text-blue-400 transition-colors cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              openSocial(social.twitter!);
+            }}
             title="Twitter"
           >
             <Twitter className="h-3 w-3" />
@@ -136,8 +142,11 @@ export const TokenRow = ({ id, logo, name, symbol, age, contract, social, metric
           <Button 
             variant="ghost" 
             size="sm" 
-            className="h-5 w-5 p-0 hover:text-blue-500 transition-colors"
-            onClick={() => openSocial(social.website!)}
+            className="h-5 w-5 p-0 hover:text-blue-500 transition-colors cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              openSocial(social.website!);
+            }}
             title="Website"
           >
             <Globe className="h-3 w-3" />
@@ -147,8 +156,11 @@ export const TokenRow = ({ id, logo, name, symbol, age, contract, social, metric
           <Button 
             variant="ghost" 
             size="sm" 
-            className="h-5 w-5 p-0 hover:text-blue-400 transition-colors"
-            onClick={() => openSocial(social.telegram!)}
+            className="h-5 w-5 p-0 hover:text-blue-400 transition-colors cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              openSocial(social.telegram!);
+            }}
             title="Telegram"
           >
             <MessageCircle className="h-3 w-3" />
@@ -188,9 +200,12 @@ export const TokenRow = ({ id, logo, name, symbol, age, contract, social, metric
       {/* Buy Button */}
       <div className="w-16">
         <Button 
-          className="w-full bg-green hover:bg-green/90 text-green-foreground h-6 text-xs transition-all hover:scale-105"
+          className="w-full bg-green hover:bg-green/90 text-green-foreground h-6 text-xs transition-all hover:scale-105 cursor-pointer touch-manipulation"
           size="sm"
-          onClick={handleBuy}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleBuy();
+          }}
           disabled={isBuying}
         >
           {isBuying ? '...' : 'Buy'}
