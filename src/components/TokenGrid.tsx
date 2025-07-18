@@ -1,183 +1,155 @@
-import { TokenCard } from "./TokenCard";
-import { Badge } from "@/components/ui/badge";
+import { TokenRow } from "./TokenRow";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, Flame, Sparkles } from "lucide-react";
+import { Search, MoreHorizontal } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
-// Mock data for demonstration
 const mockTokens = [
   {
-    logo: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=40&h=40&fit=crop&crop=faces",
-    name: "Billy The Bull",
-    symbol: "BTB",
-    age: "3s",
-    contract: "AZvg...y65Y",
-    social: {
-      twitter: "https://twitter.com/example",
-      website: "https://example.com",
-      telegram: "https://t.me/example"
-    },
+    logo: "https://via.placeholder.com/32",
+    name: "topless coin",
+    symbol: "topless",
+    age: "1s",
+    contract: "FSZc...pump",
+    platform: "pump",
+    social: {},
     metrics: {
-      priceChange1h: 18.8,
-      priceChange24h: 2,
-      txCount: 13,
-      volume: "953.6",
-      marketCap: "6.8K",
-      price: 0.014
-    }
-  },
-  {
-    logo: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=40&h=40&fit=crop&crop=faces",
-    name: "paytie",
-    symbol: "paytie",
-    age: "4s",
-    contract: "8m2s...bonk",
-    social: {
-      twitter: "https://twitter.com/example"
-    },
-    metrics: {
-      priceChange1h: 0.1,
-      priceChange24h: 7,
-      txCount: 7,
-      volume: "1.8K",
-      marketCap: "5K",
-      price: 0.047
-    }
-  },
-  {
-    logo: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=40&h=40&fit=crop&crop=faces",
-    name: "Big Yellow Banana",
-    symbol: "BYB",
-    age: "6s",
-    contract: "6BPM...bonk",
-    social: {
-      twitter: "https://twitter.com/example"
-    },
-    metrics: {
-      priceChange1h: 1.7,
+      priceChange1h: 7.3,
       priceChange24h: 3,
-      txCount: 4,
-      volume: "434.3",
+      txCount: 3,
+      volume: "302.8",
       marketCap: "5.5K",
-      price: 0.0027
+      price: 0.0049,
     }
   },
   {
-    logo: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=40&h=40&fit=crop&crop=faces",
-    name: "GoonerAgent37500",
-    symbol: "GoonAgent",
-    age: "7s",
-    contract: "g2ja...bonk",
+    logo: "https://via.placeholder.com/32",
+    name: "Claude Terminal",
+    symbol: "Claude",
+    age: "5s",
+    contract: "At5Q...bonk",
+    platform: "bonk",
     social: {
-      twitter: "https://twitter.com/example"
+      twitter: "https://x.com/mckaywrigley/status/1934810851682472303"
     },
     metrics: {
-      priceChange1h: -2.1,
-      priceChange24h: 1.5,
+      priceChange1h: 2.4,
+      priceChange24h: 7,
+      txCount: 1,
+      volume: "360.1",
+      marketCap: "5.4K",
+      price: 0.000080,
+    }
+  },
+  {
+    logo: "https://via.placeholder.com/32",
+    name: "microInu",
+    symbol: "microInu",
+    age: "16s",
+    contract: "3sry...pump",
+    platform: "pump",
+    social: {},
+    metrics: {
+      priceChange1h: 16,
+      priceChange24h: 13,
+      txCount: 22,
+      volume: "1.2K",
+      marketCap: "6.5K",
+      price: 0.0092,
+    }
+  },
+  {
+    logo: "https://via.placeholder.com/32",
+    name: "i love you to bro <3",
+    symbol: "i luh u",
+    age: "19s",
+    contract: "4iyN...bonk",
+    platform: "bonk",
+    social: {},
+    metrics: {
+      priceChange1h: 0,
+      priceChange24h: 7,
+      txCount: 4,
+      volume: "710.6",
+      marketCap: "5K",
+      price: 0.0091,
+    }
+  },
+  {
+    logo: "https://via.placeholder.com/32",
+    name: "Mask Dog Coin",
+    symbol: "MASKDOG",
+    age: "23s",
+    contract: "2kFF...moon",
+    platform: "moon",
+    social: {
+      website: "https://moonshot.com"
+    },
+    metrics: {
+      priceChange1h: -2,
+      priceChange24h: 15,
       txCount: 8,
-      volume: "712.1",
-      marketCap: "3.2K",
-      price: 0.0089
-    }
-  },
-  {
-    logo: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=40&h=40&fit=crop&crop=faces",
-    name: "Solana Cat Token",
-    symbol: "SCAT",
-    age: "12s",
-    contract: "SC4T...meow",
-    social: {
-      twitter: "https://twitter.com/example",
-      telegram: "https://t.me/example"
-    },
-    metrics: {
-      priceChange1h: 45.2,
-      priceChange24h: 15.8,
-      txCount: 25,
-      volume: "2.1K",
-      marketCap: "12.5K",
-      price: 0.125
-    }
-  },
-  {
-    logo: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=40&h=40&fit=crop&crop=faces",
-    name: "Moon Rocket",
-    symbol: "MOON",
-    age: "15s",
-    contract: "M00N...rock",
-    social: {
-      twitter: "https://twitter.com/example",
-      website: "https://example.com"
-    },
-    metrics: {
-      priceChange1h: -5.3,
-      priceChange24h: 8.9,
-      txCount: 18,
-      volume: "1.5K",
-      marketCap: "8.7K",
-      price: 0.067
+      volume: "892.3",
+      marketCap: "7.1K",
+      price: 0.0156,
     }
   }
 ];
 
+// Duplicate tokens to fill the list
+const allTokens = [...mockTokens, ...mockTokens, ...mockTokens];
+
 export const TokenGrid = () => {
   return (
-    <div className="flex-1 p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-bold">Trenches</h1>
-          <Badge className="bg-green/20 text-green border-green/30">
-            <Flame className="w-3 h-3 mr-1" />
-            New
-          </Badge>
-        </div>
-        
-        <div className="flex items-center gap-4">
+    <main className="flex-1 bg-background">
+      {/* Header Controls */}
+      <div className="border-b border-border px-4 py-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" className="h-7 text-xs">🌱 New</Button>
+              <Button variant="outline" size="sm" className="h-7 text-xs">P1</Button>
+              <Button variant="outline" size="sm" className="h-7 text-xs">P2</Button>
+              <Button variant="outline" size="sm" className="h-7 text-xs">P3</Button>
+            </div>
+            <div className="relative">
+              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+              <Input 
+                placeholder="Search" 
+                className="pl-7 h-7 w-40 text-xs"
+              />
+            </div>
+          </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">
-              P1
+            <span className="text-xs text-muted-foreground">9</span>
+            <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+              <MoreHorizontal className="h-3 w-3" />
             </Button>
-            <Button variant="outline" size="sm">
-              P2
-            </Button>
-            <Button variant="outline" size="sm">
-              P3
-            </Button>
-          </div>
-          
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <TrendingUp className="w-4 h-4" />
-            <span>Live Updates</span>
-            <div className="w-2 h-2 bg-green rounded-full animate-pulse"></div>
           </div>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="flex items-center gap-2 mb-6">
-        <Button variant="outline" size="sm">🌱 New</Button>
-        <Button variant="outline" size="sm">🔥 Trending</Button>
-        <Button variant="outline" size="sm">⚡ Volume</Button>
-        <Button variant="outline" size="sm">📈 Gainers</Button>
-        <Button variant="outline" size="sm">📉 Losers</Button>
+      {/* Table Header */}
+      <div className="border-b border-border px-4 py-2 bg-muted/20">
+        <div className="flex items-center gap-3 text-xs text-muted-foreground font-medium">
+          <div className="w-8">#</div>
+          <div className="flex-1">Token</div>
+          <div className="w-16">Social</div>
+          <div className="w-12 text-center">1h</div>
+          <div className="w-12 text-center">24h</div>
+          <div className="w-16 text-center">Metrics</div>
+          <div className="w-20 text-right">Price</div>
+          <div className="w-12 text-center">TX</div>
+          <div className="w-20 text-right">V/MC</div>
+          <div className="w-16">Action</div>
+        </div>
       </div>
 
-      {/* Token Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {mockTokens.map((token, index) => (
-          <TokenCard key={index} {...token} />
+      {/* Token List */}
+      <div className="overflow-y-auto">
+        {allTokens.map((token, index) => (
+          <TokenRow key={index} {...token} />
         ))}
       </div>
-
-      {/* Load More */}
-      <div className="flex justify-center mt-8">
-        <Button 
-          variant="outline" 
-          className="hover:border-green hover:text-green"
-        >
-          Load More Tokens
-        </Button>
-      </div>
-    </div>
+    </main>
   );
 };
