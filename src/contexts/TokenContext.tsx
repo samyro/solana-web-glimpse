@@ -87,8 +87,9 @@ const initialTokens: Token[] = [
       price: 0.000080,
     }
   },
-  // ... more tokens with varied data
-].concat([...Array(20)].map((_, i) => ({
+];
+
+const generatedTokens: Token[] = [...Array(20)].map((_, i) => ({
   id: `token-${i + 3}`,
   logo: "https://via.placeholder.com/32",
   name: `Token ${i + 3}`,
@@ -105,7 +106,9 @@ const initialTokens: Token[] = [
     marketCap: `${(Math.random() * 100).toFixed(1)}K`,
     price: Math.random() * 0.1,
   }
-})));
+}));
+
+const allTokens = [...initialTokens, ...generatedTokens];
 
 const initialFilters: FilterState = {
   platforms: [],
@@ -118,7 +121,7 @@ const initialFilters: FilterState = {
 };
 
 export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [tokens, setTokens] = useState<Token[]>(initialTokens);
+  const [tokens, setTokens] = useState<Token[]>(allTokens);
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [isLoading, setIsLoading] = useState(false);
 
